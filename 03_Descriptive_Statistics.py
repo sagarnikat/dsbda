@@ -129,14 +129,14 @@ data = {
 temp_df = pd.DataFrame(data)
 
 # Save as CSV file
-temp_df.to_csv("data.csv", index=False)
+temp_df.to_csv("data1.csv", index=False)
 
-print("data.csv file created successfully!")
+print("data1.csv file created successfully!")
 
 # STEP 3: LOAD DATA FROM CSV FILE
 
 
-iris = pd.read_csv("data.csv")
+iris = pd.read_csv("data1.csv")
 
 # Step 17: Display Iris Dataset
 print("\nIris Dataset:\n")
