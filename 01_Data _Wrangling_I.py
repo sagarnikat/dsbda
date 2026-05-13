@@ -5,49 +5,53 @@ from sklearn.preprocessing import MinMaxScaler
 
 # Step 2: Create Dataset
 data = {
+
     'Emp_ID':[1,2,3,4,5,6,7,8,9,10,
               11,12,13,14,15,16,17,18,19,20],
 
-    'Name':['Amit','Sneha','Raj','Pooja','Karan',
-            'Neha','Ravi','Tina','Arjun','Meena',
-            'Om','Riya','Mohit','Asha','Vikas',
-            'Priya','Rohit','Kavya','Suraj','Anjali'],
+    'Name':['Yash','Komal','Aditya','Sonal','Nikhil',
+            'Pallavi','Tejas','Mrunal','Harsh','Vaishnavi',
+            'Sagar','Isha','Atharva','Ketaki','Manav',
+            'Sakshi','Pratik','Tanvi','Ruturaj','Bhakti'],
 
-    'Age':[23,25,28,24,30,29,31,26,27,32,
-           24,23,33,28,29,27,35,26,30,31],
+    'Age':[22,24,29,np.nan,31,27,34,25,26,33,
+           23,28,36,30,29,24,38,27,32,35],
 
     'Gender':['Male','Female','Male','Female','Male',
               'Female','Male','Female','Male','Female',
               'Male','Female','Male','Female','Male',
               'Female','Male','Female','Male','Female'],
 
-    'Department':['IT','HR','Sales','IT','Finance',
-                  'HR','IT','Sales','Finance','IT',
-                  'HR','Sales','Finance','IT','Sales',
-                  'HR','Finance','IT','Sales','HR'],
+    'Department':['Developer','HR','Marketing','Developer','Finance',
+                  'HR','Developer',np.nan,'Finance','Developer',
+                  'HR','Marketing','Finance','Developer','Marketing',
+                  'HR','Finance','Developer','Marketing','HR'],
 
-    'Salary':[35000,42000,50000,39000,60000,
-              52000,65000,47000,55000,70000,
-              41000,36000,72000,58000,53000,
-              49000,80000,46000,61000,64000],
+    'Salary':[38000,45000,52000,41000,67000,
+              300000,72000,np.nan,59000,76000,
+              43000,39000,81000,61000,56000,
+              50000,95000,48000,69000,73000],
 
-    'Experience':[1,2,4,2,5,4,6,3,4,7,
-                  2,1,8,5,4,3,10,3,5,6]
+    'Experience':[1,2,5,2,6,
+                  18,7,3,4,8,
+                  2,1,10,5,4,
+                  3,22,3,6,7]
 }
 
 # Convert dictionary to DataFrame
 temp_df = pd.DataFrame(data)
 
-# Save as CSV file
-temp_df.to_csv("data.csv", index=False)
+# Add Duplicate Record
+temp_df.loc[20] = temp_df.loc[4]
 
-print("data.csv file created successfully!")
+# Save as CSV file
+temp_df.to_csv("employee_data.csv", index=False)
+
+print("employee_data.csv file created successfully!")
 
 # STEP 3: LOAD DATA FROM CSV FILE
 
-
-df = pd.read_csv("data.csv")
-
+df = pd.read_csv("employee_data.csv")
 
 # Step 4: Display Dataset
 print("Dataset:\n")
@@ -65,7 +69,55 @@ print(df.shape)
 print("\nMissing Values:")
 print(df.isnull().sum())
 
+# ---------------------------------------------------
+# HANDLING MISSING VALUES
+# ---------------------------------------------------
+
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+
+df['Salary'] = df['Salary'].fillna(df['Salary'].mean())
+
+df['Department'] = df['Department'].fillna(df['Department'].mode()[0])
+
+print("\nMissing Values After Handling:")
+print(df.isnull().sum())
+
+# ---------------------------------------------------
+# CHECK DUPLICATE RECORDS
+# ---------------------------------------------------
+
+print("\nDuplicate Records:")
+print(df.duplicated().sum())
+
+# Remove duplicate records
+df = df.drop_duplicates()
+
+print("\nShape After Removing Duplicates:")
+print(df.shape)
+
+# ---------------------------------------------------
+# HANDLING OUTLIERS USING IQR METHOD
+# ---------------------------------------------------
+
+Q1 = df['Salary'].quantile(0.25)
+Q3 = df['Salary'].quantile(0.75)
+
+IQR = Q3 - Q1
+
+lower_limit = Q1 - 1.5 * IQR
+upper_limit = Q3 + 1.5 * IQR
+
+median_salary = df['Salary'].median()
+
+# Replace outliers with median
+df['Salary'] = np.where(df['Salary'] > upper_limit,
+                        median_salary,
+                        df['Salary'])
+
+# ---------------------------------------------------
 # Step 8: Dataset Information
+# ---------------------------------------------------
+
 print("\nDataset Info:")
 print(df.info())
 
