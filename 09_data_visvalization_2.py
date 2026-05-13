@@ -42,9 +42,17 @@ data = {
             10.50,13.00,7.22,26.00,46.90,
             13.00,8.05,35.50,21.07,90.00],
 }
+temp_df = pd.DataFrame(data)
 
-# Step 3: Create DataFrame
-df = pd.DataFrame(data)
+# Save as CSV file
+temp_df.to_csv("data.csv", index=False)
+
+print("data.csv file created successfully!")
+
+# STEP 3: LOAD DATA FROM CSV FILE
+
+
+df = pd.read_csv("data.csv")
 
 # Step 4: Display Dataset
 print("Titanic Dataset:\n")

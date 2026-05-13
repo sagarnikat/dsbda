@@ -36,9 +36,17 @@ data = {
                'versicolor','versicolor','versicolor','versicolor','versicolor',
                'virginica','virginica','virginica','virginica','virginica']
 }
+temp_df = pd.DataFrame(data)
 
-# Step 3: Convert Dictionary to DataFrame
-iris = pd.DataFrame(data)
+# Save as CSV file
+temp_df.to_csv("data.csv", index=False)
+
+print("data.csv file created successfully!")
+
+# STEP 3: LOAD DATA FROM CSV FILE
+
+
+iris = pd.read_csv("data.csv")
 
 # Step 4: Display Dataset
 print("Iris Dataset:\n")

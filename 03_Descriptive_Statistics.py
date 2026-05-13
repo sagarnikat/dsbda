@@ -21,10 +21,18 @@ data = {
               46000,56000,31000,48000,60000,
               32000,50000,62000,34000,51000]
 }
+# Convert dictionary to DataFrame
+temp_df = pd.DataFrame(data)
 
-# Step 3: Convert into DataFrame
-df = pd.DataFrame(data)
+# Save as CSV file
+temp_df.to_csv("data.csv", index=False)
 
+print("data.csv file created successfully!")
+
+# STEP 3: LOAD DATA FROM CSV FILE
+
+
+df = pd.read_csv("data.csv")
 # Step 4: Display Dataset
 print("Dataset:\n")
 print(df)
@@ -117,7 +125,18 @@ data = {
                'versicolor','versicolor','versicolor','versicolor','versicolor',
                'virginica','virginica','virginica','virginica','virginica']
 }
-iris = pd.DataFrame(data)
+
+temp_df = pd.DataFrame(data)
+
+# Save as CSV file
+temp_df.to_csv("data.csv", index=False)
+
+print("data.csv file created successfully!")
+
+# STEP 3: LOAD DATA FROM CSV FILE
+
+
+iris = pd.read_csv("data.csv")
 
 # Step 17: Display Iris Dataset
 print("\nIris Dataset:\n")
